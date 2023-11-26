@@ -8,7 +8,7 @@ router.get('/', function (req, res, next) {
 });
 
 // POST /api/users/register
-router.get('register', async (req, res, next) => {
+router.post('/register', async (req, res, next) => {
   try {
     var user = await User.create(req.body);
     console.log(user);
@@ -29,7 +29,7 @@ router.post('/login', async (req, res, next) => {
     if (!user) {
       return res.status(400).json({ error: 'Email not registered' });
     }
-    var verifiedPassword = await User.verifyPassword(password); // returns True or False
+    var verifiedPassword = await user.verifyPassword(password); // returns True or False
     console.log(user, verifiedPassword);
     if (!verifiedPassword) {
       return res.status(400).json({ error: 'Password is invalid' });
